@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8e9ec">
+  <title>Una pequeña sorpresa</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      padding: 24px; overflow-x: hidden;
+      font-family: Georgia, "Times New Roman", serif;
+      color: #603b45;
+      background: radial-gradient(circle at top, #fff8f7, #f4dfe5 72%);
+    }
+    .scene { width: min(100%, 440px); text-align: center; }
+    .hint { margin: 0 0 26px; font-size: 1rem; letter-spacing: .04em; }
+    .envelope-wrap { position: relative; height: 260px; display: grid; place-items: center; }
+    .envelope {
+      position: relative; width: min(340px, 86vw); height: 205px;
+      background: #d99aa9; border-radius: 8px;
+      box-shadow: 0 18px 35px rgba(112, 57, 75, .18);
+      cursor: pointer; border: 0; padding: 0;
+      perspective: 900px;
+    }
+    .envelope:focus-visible { outline: 3px solid #8e5264; outline-offset: 7px; }
+    .front {
+      position: absolute; inset: 0;
+      background: linear-gradient(145deg, #e8b6c1, #d68fa1);
+      clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+      border-radius: 8px; z-index: 3;
+    }
+    .flap {
+      position: absolute; inset: 0;
+      background: #efc6ce;
+      clip-path: polygon(0 0, 100% 0, 50% 62%);
+      transform-origin: top; transition: transform .9s ease;
+      z-index: 4;
+    }
+    .seal {
+      position: absolute; z-index: 5; left: 50%; top: 58%;
+      transform: translate(-50%, -50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      display: grid; place-items: center; color: white;
+      background: #a94f68; font-size: 23px;
+      box-shadow: 0 3px 9px rgba(80, 30, 45, .2);
+      transition: opacity .4s ease;
+    }
+    .letter {
+      position: absolute; z-index: 2; left: 7%; width: 86%; bottom: 12px;
+      min-height: 180px; padding: 25px 21px;
+      background: #fffdf9; border-radius: 5px;
+      box-shadow: 0 5px 18px rgba(90, 45, 55, .13);
+      opacity: 0; transform: translateY(35px);
+      transition: transform 1s ease .35s, opacity .7s ease .35s;
+      text-align: left; line-height: 1.65;
+    }
+    .letter h1 { margin: 0 0 12px; color: #a34f67; font-size: 1.5rem; font-weight: normal; }
+    .letter p { margin: 0 0 12px; font-size: 1rem; }
+    .signature { text-align: right; color: #a34f67; font-style: italic; }
+    .opened .flap { transform: rotateX(180deg); z-index: 1; }
+    .opened .seal { opacity: 0; }
+    .opened .letter { opacity: 1; transform: translateY(-55px); z-index: 5; }
+    .opened .front { z-index: 3; }
+    .after { margin-top: 20px; font-size: .9rem; opacity: .8; }
+    .heart { color: #b85b73; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="scene">
+    <p class="hint" id="hint">Tengo algo pequeño para ti…</p>
+    <div class="envelope-wrap">
+      <button class="envelope" id="envelope" aria-label="Abrir la carta" aria-expanded="false">
+        <div class="letter">
+          <h1>Hola, amor.</h1>
+          <p>No sé si te esperabas esto, pero quería prepararte una pequeña sorpresa.</p>
+          <p>Simplemente quería sacarte una sonrisa y recordarte que me gusta compartir estos pequeños momentos contigo.</p>
+          <p>Espero que te guste esta sorpresa. Y ahora… ¡te mando un beso enorme! <span class="heart">😘❤️</span></p>
+          <p class="signature">Con cariño, Kervey</p>
+        </div>
+        <div class="flap"></div>
+        <div class="front"></div>
+        <div class="seal">♥</div>
+      </button>
+    </div>
+    <p class="after">Pulsa el sobre para abrirlo <span class="heart">♥</span></p>
+  </main>
+  <script>
+    const envelope = document.getElementById('envelope');
+    const hint = document.getElementById('hint');
+    envelope.addEventListener('click', () => {
+      const opened = envelope.classList.toggle('opened');
+      envelope.setAttribute('aria-expanded', String(opened));
+      hint.textContent = opened ? 'Una pequeña sorpresa para ti ❤️' : 'Tengo algo pequeño para ti…';
+    });
+  </script>
+</body>
+</html>
